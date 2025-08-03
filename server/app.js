@@ -1,12 +1,16 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import userRoutes from './routes/users.js';
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('OT Report API running');
-});
+// Use the users router for /api/users routes
+app.use('/api/users', userRoutes);
 
-app.listen(3001, () => console.log('Server running on port 3001'));
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
