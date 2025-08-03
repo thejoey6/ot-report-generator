@@ -9,7 +9,8 @@ const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET
 
 
-// Registration of new user
+// Registration of new user //testing this out rq
+
 router.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
