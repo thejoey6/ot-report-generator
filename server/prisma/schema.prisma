@@ -13,6 +13,7 @@ model User {
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
+  templates Template[]
   reports   Report[]
 }
 
@@ -32,4 +33,15 @@ model Section {
   content   String
   isVisible Boolean @default(true)
   report    Report  @relation(fields: [reportId], references: [id])
+}
+
+model Template {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  fileUrl     String
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
