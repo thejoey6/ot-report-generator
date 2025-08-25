@@ -4,6 +4,7 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import fs from 'fs';
 
 
 const router = express.Router();
@@ -135,6 +136,35 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete template' });
   }
 });
+
+
+// fetch template to frontend for zip and gen report
+
+// GET /api/templates/:id/download
+router.get('/:id/download', async (req, res) => {
+  const templateId = Number(req.params.id);
+  const userId = req.user?.userId;
+
+  if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+
+  const template = await prisma.template.findUnique({
+    where: { id: templateId },
+  });
+
+  if (!template || template.userId !== userId) {
+    return res.status(404).json({ error: 'Template not found or unauthorized' });
+  }
+
+  const filePath = path.join(__dirname, '..', template.fileUrl);
+
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ error: 'File not found on server' });
+  }
+
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+  res.sendFile(filePath);
+});
+
 
 
 

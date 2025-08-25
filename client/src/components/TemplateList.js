@@ -20,7 +20,10 @@ function TemplateList({ templates, onRefresh }) {
 const saveEdit = async (id) => {
   const token = localStorage.getItem('token');
   try {
-    let name = editName;
+    let name = editName.trim();
+    if (name === '' || name === '.docx') {
+        name = 'default';
+    }
     if (!name.toLowerCase().endsWith('.docx')) {
       name += '.docx';
     }
@@ -91,23 +94,14 @@ const saveEdit = async (id) => {
                 style={{ width: '300px' }}
               />
               <br />
-              <button
-                onClick={() => {
-                  let name = editName;
-                  if (!name.toLowerCase().endsWith('.docx')) {
-                    name += '.docx';
-                  }
-                  setEditName(name);
-                  saveEdit(template.id);
-                }}
-              >
+              <button onClick={() => {saveEdit(template.id);}} >
                 Save
               </button>
               <button onClick={cancelEdit}>Cancel</button>
             </div>
           ) : (
             <>
-              <strong>{template.name}</strong> – {template.description || 'No description'}
+              <strong>{template.name}</strong> – {template.description || ''}
               <br />
               <button onClick={() => startEdit(template)}>Edit</button>
               <button

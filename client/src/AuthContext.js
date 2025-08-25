@@ -7,23 +7,32 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // On mount, check localStorage for token and decode
+  // Check token validity on mount
   useEffect(() => {
     const token = localStorage.getItem('token');
+
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        // Optional: Check token expiry here
-        setUser(decoded);
-      } catch {
+
+        const isExpired = decoded.exp * 1000 < Date.now();
+        if (isExpired) {
+          console.warn("Token is expired");
+          localStorage.removeItem('token');
+          setUser(null);
+        } else {
+          setUser(decoded);
+        }
+      } catch (err) {
+        console.error("Token is invalid:", err);
         localStorage.removeItem('token');
         setUser(null);
       }
     }
+
     setLoading(false);
   }, []);
 
-  //Handle tokens properly
   const login = (token) => {
     localStorage.setItem('token', token);
     setUser(jwtDecode(token));
@@ -35,7 +44,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

@@ -3,6 +3,8 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
+import ReportGenerator from './pages/ReportGenerator';
+
 
 function App() {
   return (
@@ -14,8 +16,9 @@ function App() {
           <ProtectedRoute>
             <Dashboard />
           </ProtectedRoute>
-        }
-      />
+        } />
+      <Route path="/generate" element={<ProtectedRoute> <ReportGenerator /> </ProtectedRoute>} />
+
     </Routes>  
     );
 }
