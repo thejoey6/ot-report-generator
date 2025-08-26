@@ -1,0 +1,21 @@
+{
+  "Cognitive": {
+    "1": "calm when picked up",
+    "2": "look continuously at an object for 7 to 10 seconds",
+    "3": "habituate to a rattle within the first 3 trials",
+    "4": "discriminate between objects",
+    "5": "recognize caregiver",
+    "6": "react to caregiver",
+    "7": "react to departure of caregiver",
+    "8": "shift attention"
+  },
+  "Receptive Communication": {
+    "1": "consistently look at a person and sustain look for at least 3 seconds",
+    "2": "calm when spoken to",
+    "3": "react to sounds in environment",
+    "4": "recognize caregiver",
+    "5": "respond to a person's voice",
+    "6": "display a reaction that is clearly anticipatory",
+    "7": "shift attention"
+  }
+}

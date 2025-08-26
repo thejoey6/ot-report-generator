@@ -1,10 +1,94 @@
+/* Reset & base layout */
+* {
+  box-sizing: border-box;
+}
+
 html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, #00aaff, #0077cc);
+  color: #333;
 }
 
-body, #root {
-  min-height: 100vh;
-  background: rgb(0, 170, 255);
+/* Centered container */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+/* Headings */
+h2 {
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #004466;
+}
+
+/* Labels and form layout */
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Inputs and selects */
+select,
+input[type="text"],
+.react-select__control {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* Buttons */
+button {
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+/* Error messages */
+p {
+  margin: 0.5rem 0;
+}
+
+p[style*="red"] {
+  background: #ffe6e6;
+  color: #a00;
+  padding: 0.75rem;
+  border-radius: 6px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem;
+    margin-top: 20px;
+  }
 }
