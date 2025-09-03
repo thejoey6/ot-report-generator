@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 
+
+// protect API calls with token validation
 export const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
 

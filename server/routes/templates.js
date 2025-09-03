@@ -100,7 +100,7 @@ router.put('/:id', async (req, res) => {
   const { name, description } = req.body;
 
   try {
-    // Check template belongs to user
+    // Check user/template connection
     const existing = await prisma.template.findUnique({ where: { id: templateId } });
     if (!existing || existing.userId !== userId) {
       return res.status(404).json({ error: 'Template not found or unauthorized' });

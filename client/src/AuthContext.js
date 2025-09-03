@@ -7,7 +7,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check token validity on mount
+  // Check token validity
   useEffect(() => {
     const token = localStorage.getItem('token');
 

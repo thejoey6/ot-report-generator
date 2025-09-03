@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET
 
 
-// Registration of new user //testing this out rq
+// Registration of new user
 
 router.post('/register', async (req, res) => {
   try {
@@ -19,7 +19,7 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Email and password are required.' });
     }
 
-    // Check email status
+    // check email status
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
       return res.status(400).json({ message: 'Email already registered' });
@@ -27,7 +27,7 @@ router.post('/register', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user in DB
+    // create user in DB
     const user = await prisma.user.create({
       data: { email, password: hashedPassword },
     });
@@ -48,19 +48,17 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Email and password are required.' });
     }
 
-    // Find user
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    // Compare passwords
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    // Generate JWT
+    //if user and password good,
     const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, {
       expiresIn: '1h',
     });

@@ -52,10 +52,10 @@ function TemplateUploader({ onUploadComplete }) {
     <div>
       <h2>Upload Template</h2>
 
-      {/* File input always visible */}
+      {/* File input */}
       <input type="file" accept=".docx" onChange={handleChange} />
 
-      {/* Show description and upload button only if a file is selected */}
+      {/* Show options upon file selection */}
       {file && (
         <>
           <br />

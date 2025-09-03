@@ -1,4 +1,3 @@
-/* Reset & base layout */
 * {
   box-sizing: border-box;
 }
@@ -12,7 +11,6 @@ html, body, #root {
   color: #333;
 }
 
-/* Centered container */
 .container {
   max-width: 800px;
   margin: 0 auto;
@@ -24,14 +22,12 @@ html, body, #root {
   margin-bottom: 40px;
 }
 
-/* Headings */
 h2 {
   margin-bottom: 1rem;
   text-align: center;
   color: #004466;
 }
 
-/* Labels and form layout */
 label {
   font-weight: bold;
   display: block;
@@ -39,7 +35,6 @@ label {
   margin-bottom: 0.5rem;
 }
 
-/* Inputs and selects */
 select,
 input[type="text"],
 .react-select__control {
@@ -51,7 +46,6 @@ input[type="text"],
   border-radius: 6px;
 }
 
-/* Buttons */
 button {
   background-color: #0077cc;
   color: white;
