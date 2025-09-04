@@ -29,10 +29,10 @@ Supports:
 
 ## Tech Stack
 
-**Frontend**  :  React
-**Backend**   :  Express, Node
-**Database**  :  PostgreSQL, Prisma ORM
-**Other**     :  JWT Auth, docxtemplater, Multer
+**Frontend**  :  React   
+**Backend**   :  Express, Node   
+**Database**  :  PostgreSQL, Prisma ORM   
+**Other**     :  JWT Auth, docxtemplater, Multer   
 
 ---
 
