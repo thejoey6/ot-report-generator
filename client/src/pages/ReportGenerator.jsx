@@ -247,7 +247,9 @@ function ReportGenerator() {
           style={{ width: "100%", marginBottom: "1rem" }}
         >
           <option value="">-- Choose a domain --</option>
-          {Object.keys(sentenceOptions).map((domain) => (
+          {Object.keys(sentenceOptions)
+            .filter((domain) => !domainEntries.some((entry) => entry.domain === domain)) // don't display already added domains
+            .map((domain) => (
             <option key={domain} value={domain}>
               {domain}
             </option>
