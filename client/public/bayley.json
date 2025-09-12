@@ -1,13 +1,24 @@
 {
   "Cognitive": {
-    "1": "calm when picked up",
-    "2": "look continuously at an object for 7 to 10 seconds",
-    "3": "habituate to a rattle within the first 3 trials",
-    "4": "discriminate between objects",
-    "5": "recognize caregiver",
-    "6": "react to caregiver",
-    "7": "react to departure of caregiver",
-    "8": "shift attention"
+  "1": "calm within 30 seconds when picked up",
+  "2": "look continuously at an object for 7 to 10 seconds",
+  "3": "habituate to a rattle within the first 3 trials",
+  "4": "discriminate between objects",
+  "5": "recognize caregiver",
+  "6": "display a clearly anticipatory reaction to caregiver",
+  "7": "display a reaction to the departure of caregiver",
+  "8": "shift attention between objects",
+  "9": "show visual preference for a striped pattern",
+  "10": "habituate to balloons within 30 seconds",
+  "11": "show preference for ball over balloons",
+  "12": "respond to surroundings with visual exploration",
+  "13": "explore objects by touching, shaking, or manipulating them",
+  "14": "bring objects to mouth",
+  "15": "inspect own hands",
+  "16": "interact with mirror image",
+  "17": "persistently reach for and obtain objects",
+  "18": "play with paper by scratching, crinkling, or mouthing it",
+  "19": "bang objects intentionally and frequently"
   },
   "Receptive Communication": {
     "1": "consistently look at a person and sustain look for at least 3 seconds",

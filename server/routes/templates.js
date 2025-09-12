@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import fs from 'fs';
+import sanitize from 'sanitize-filename';
 
 
 const router = express.Router();
@@ -18,13 +19,28 @@ const __dirname = dirname(__filename);
 // Multer storage config
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../uploads/templates/'));
+    const userId = req.user?.userId;
+
+    if (!userId) {
+      return cb(new Error('Unauthorized - no user ID'), null);
+    }
+
+    const userFolder = path.join(__dirname, '../uploads/templates/', userId.toString());
+
+    // create userID subfolder if it doesn't exist
+    fs.mkdirSync(userFolder, { recursive: true });
+
+    cb(null, userFolder);
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + '-' + file.originalname);
+    const baseName = path.basename(file.originalname);
+    const safeName = sanitize(baseName);
+    cb(null, `${uniqueSuffix}-${safeName}`);
   },
 });
+
+
 
 //upload file logic
 const upload = multer({
@@ -53,7 +69,7 @@ router.post('/upload', upload.single('template'), async (req, res) => {
     const template = await prisma.template.create({
       data: {
         name: file.originalname,
-        fileUrl: `/uploads/templates/${file.filename}`,
+        fileUrl: `/uploads/templates/${userId}/${file.filename}`,
         description: description || null, 
         userId,
       },
@@ -123,11 +139,20 @@ router.delete('/:id', async (req, res) => {
   const userId = req.user?.userId;
 
   try {
-    // Check template belongs to user
+    // check template belongs to user
     const existing = await prisma.template.findUnique({ where: { id: templateId } });
     if (!existing || existing.userId !== userId) {
       return res.status(404).json({ error: 'Template not found or unauthorized' });
     }
+
+    const filePath = path.join(__dirname, '..', existing.fileUrl);
+
+    // delete the file from disk
+    fs.unlink(filePath, (err) => {
+      if (err && err.code !== 'ENOENT') {
+        console.error('Error deleting file from disk:', err);
+      }
+    });
 
     await prisma.template.delete({ where: { id: templateId } });
     res.json({ message: 'Template deleted' });
