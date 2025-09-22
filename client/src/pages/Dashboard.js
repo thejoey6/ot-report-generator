@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import LogoutButton from '../components/Header';
+import Header from '../components/Header';
 import TemplateManager from '../components/TemplateManager';
+import useTemplates from "../hooks/useTemplates";
+import Modal from '../components/Modal';
+import NewReport from '../components/ReportGenerator/NewReport';
+
 
 function Dashboard() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const templates = useTemplates(); // hook
+
   return (
       <div>
         <h1>Welcome to the Dashboard of Report Generator </h1>
-        <LogoutButton />
+        <Header />
         <TemplateManager />
-        <button onClick={() => navigate('/generate')}>Generate Report</button>
+        
+        <button onClick={() => setIsModalOpen(true)}>New Report</button>
+
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <NewReport templates={templates} onClose={() => setIsModalOpen(false)} navigate={navigate} />
+        </Modal>
       </div>
   );
 }

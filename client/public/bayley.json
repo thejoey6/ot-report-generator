@@ -1,11 +1,11 @@
 {
   "Cognitive": {
-  "1": "calm within 30 seconds when picked up",
-  "2": "look continuously at an object for 7 to 10 seconds",
-  "3": "habituate to a rattle within the first 3 trials",
-  "4": "discriminate between objects",
-  "5": "recognize caregiver",
-  "6": "display a clearly anticipatory reaction to caregiver",
+    "1": "calm within 30 seconds when picked up",
+     "2": "look continuously at an object for 7 to 10 seconds",
+     "3": "habituate to a rattle within the first 3 trials",
+     "4": "discriminate between objects",
+     "5": "recognize caregiver",
+     "6": "display a clearly anticipatory reaction to caregiver",
   "7": "display a reaction to the departure of caregiver",
   "8": "shift attention between objects",
   "9": "show visual preference for a striped pattern",
@@ -16,9 +16,9 @@
   "14": "bring objects to mouth",
   "15": "inspect own hands",
   "16": "interact with mirror image",
-  "17": "persistently reach for and obtain objects",
-  "18": "play with paper by scratching, crinkling, or mouthing it",
-  "19": "bang objects intentionally and frequently"
+    "17": "persistently reach for and obtain objects",
+    "18": "play with paper by scratching, crinkling, or mouthing it",
+    "19": "bang objects intentionally and frequently"
   },
   "Receptive Communication": {
     "1": "consistently look at a person and sustain look for at least 3 seconds",
@@ -28,5 +28,20 @@
     "5": "respond to a person's voice",
     "6": "display a reaction that is clearly anticipatory",
     "7": "shift attention"
+  },
+  "Expressive Communication": {
+    "1": "placeholder"
+  },
+ "Fine Motor": {
+    "1": "placeholder"
+  },
+ "Gross Motor": {
+    "1": "placeholder"
+  },
+ "Adaptive Behavior": {
+    "1": "placeholder"
+  },
+ "Social Emotional": {
+    "1": "placeholder"
   }
 }
