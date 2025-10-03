@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function TemplateUploader({ onUploadComplete }) {
+function TemplateUploader({ onUploadComplete, token }) {
   const [file, setFile] = useState(null);
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
@@ -12,7 +12,6 @@ function TemplateUploader({ onUploadComplete }) {
   const handleUpload = async () => {
     if (!file) return;
   
-    const token = localStorage.getItem('token');
     if (!token) {
         setMessage("You must be logged in to upload a template");
         return;
@@ -24,7 +23,7 @@ function TemplateUploader({ onUploadComplete }) {
 
 
     try {
-        const res = await fetch('http://localhost:4000/api/templates/upload', {
+        const res = await fetch('/api/templates/upload', {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,

@@ -1,24 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import TemplateUpload from './TemplateUpload';
 import TemplateList from './TemplateList';
+import { AuthContext } from '../AuthContext';
 
-function TemplateManager() {
-  const [templates, setTemplates] = useState([]);
-
-  const fetchTemplates = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:4000/api/templates', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await res.json();
-      setTemplates(data);
-    } catch (err) {
-      console.error('Failed to fetch templates:', err);
-    }
-  };
+function TemplateManager({templates, fetchTemplates}) {
+const { accessToken, fetchAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
     fetchTemplates();
@@ -26,8 +12,8 @@ function TemplateManager() {
 
   return (
     <div>
-      <TemplateUpload onUploadComplete={fetchTemplates} />
-      <TemplateList templates={templates} onRefresh={fetchTemplates} />
+      <TemplateUpload onUploadComplete={fetchTemplates} token={accessToken} />
+      <TemplateList templates={templates} onRefresh={fetchTemplates} token={accessToken} />
     </div>
   );
 }

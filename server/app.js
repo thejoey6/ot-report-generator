@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import userRoutes from './routes/users.js';
 import templateRoutes from './routes/templates.js';
 import { authenticateToken } from './middleware/authenticateToken.js';
+import cookieParser from "cookie-parser";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,7 +19,9 @@ app.use(cors({
   origin: 'http://localhost:3000',
   credentials: true,
 }));
+
 app.use(express.json());
+app.use(cookieParser());
 
 //serve uploads statically
 app.use("/uploads/templates", express.static(path.join(__dirname, "uploads/templates")));

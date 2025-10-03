@@ -1,23 +1,8 @@
-// DomainTabs.jsx
 import React, { useState, useEffect } from "react";
-import {
-  DndContext,
-  closestCenter,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  useSortable,
-  horizontalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import { DndContext, closestCenter, PointerSensor, useSensor, useSensors,} from "@dnd-kit/core";
+import { arrayMove, SortableContext, useSortable, horizontalListSortingStrategy, } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import {
-  restrictToHorizontalAxis,
-  restrictToParentElement,
-} from "@dnd-kit/modifiers";
+import { restrictToHorizontalAxis, restrictToParentElement, } from "@dnd-kit/modifiers";
 
 const SortableTab = ({ entry, idx, onDelete, tabWidth, currentDomain }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
@@ -69,6 +54,7 @@ const style = {
         }}
       >
         {entry.domain}
+        
         <div
           style={{
             position: "absolute",
@@ -77,12 +63,11 @@ const style = {
             width: "40px",
             height: "100%",
             pointerEvents: "none",
-            background: "linear-gradient(to left, #f3f3f3, rgba(243,243,243,0))",
+            background: `linear-gradient(to left, ${style.background}, ${style.background}77)`,
           }}
         />
       </div>
 
-      {/* Delete button (not draggable) */}
       <div
         style={{
           display: "flex",
@@ -123,6 +108,7 @@ const DomainTabs = ({
   setUnsuccessfulBehaviors,
   setDomainEntries,
 }) => {
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -147,6 +133,31 @@ const DomainTabs = ({
   }, [domainEntries, setDomainEntries, setCurrentDomain, setSuccessfulBehaviors, setUnsuccessfulBehaviors]);
 
 
+  // open recent tab as opposed to empty/no tab selected
+  useEffect(() => {
+  if (domainEntries.length > 0 && !currentDomain) {
+    const last = domainEntries[domainEntries.length - 1];
+    openTab(last);
+  }
+}, [domainEntries, currentDomain, setCurrentDomain, setSuccessfulBehaviors, setUnsuccessfulBehaviors]);
+
+
+  const openTab = (tab) => {
+    setCurrentDomain(tab.domain);
+
+    setSuccessfulBehaviors(
+      tab.sentences
+        .filter((s) => s.did)
+        .map((s) => ({ label: s.text, value: s.text }))
+    );
+    
+    setUnsuccessfulBehaviors(
+      tab.sentences
+        .filter((s) => !s.did)
+        .map((s) => ({ label: s.text, value: s.text }))
+    );
+  }
+
   const handleDragEnd = (event) => {
     const { active, over } = event;
     if (!over) return;
@@ -161,20 +172,10 @@ const DomainTabs = ({
     // Open edit page after dragging tab
     const draggedItem = domainEntries.find((d) => d.domain === active.id);
     if (draggedItem) {
-      setCurrentDomain(draggedItem.domain);
-      setSuccessfulBehaviors(
-        draggedItem.sentences
-          .filter((s) => s.did)
-          .map((s) => ({ label: s.text, value: s.text }))
-      );
-      setUnsuccessfulBehaviors(
-        draggedItem.sentences
-          .filter((s) => !s.did)
-          .map((s) => ({ label: s.text, value: s.text }))
-      );
-
+      openTab(draggedItem);
     }
   };
+
 
    const handleAddDomain = () => {
     // Prevent multiple
@@ -196,12 +197,11 @@ const DomainTabs = ({
 };
 
 
-  const containerWidth = 800;
   const numTabs = domainEntries.length;
-  const tabWidth = Math.min(Math.max(containerWidth / numTabs - 12, 140), 330);
+  const tabWidth = Math.min(Math.max(800 / numTabs +40, 164), 330);
 
-  return (
-    <div style={{ marginBottom: "20px" }}>
+ return (
+    <div className="domain-tabs-container">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -209,17 +209,10 @@ const DomainTabs = ({
         modifiers={[restrictToHorizontalAxis, restrictToParentElement]}
       >
         <SortableContext
-        items={[...domainEntries.map((d) => d.domain), "__add__"]}
-        strategy={horizontalListSortingStrategy}
+          items={[...domainEntries.map((d) => d.domain), "__add__"]}
+          strategy={horizontalListSortingStrategy}
         >
-          <div
-            style={{
-              display: "flex",
-              borderBottom: "2px solid #ccc",
-              overflowX: "hidden",
-              position: "relative",
-            }}
-          >
+          <div className="tab-row">
             {domainEntries.map((entry, idx) => (
               <SortableTab
                 key={entry.domain}
@@ -229,37 +222,20 @@ const DomainTabs = ({
                 currentDomain={currentDomain}
                 onDelete={() => {
                   const domainToDelete = entry.domain;
-                  setDomainEntries(domainEntries.filter((_, i) => i !== idx))
+                  setDomainEntries(domainEntries.filter((_, i) => i !== idx));
 
                   if (currentDomain === domainToDelete) {
                     setCurrentDomain("");
                     setSuccessfulBehaviors([]);
                     setUnsuccessfulBehaviors([]);
                   }
-                } }
+                }}
               />
             ))}
 
-         <div
-            onClick={handleAddDomain}
-            style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "6px 10px",
-                marginRight: "8px",
-                borderRadius: "8px 8px 0 0",
-                background: "#f3f3f3",
-                cursor: "pointer",
-                fontSize: "15pt",
-                minWidth: 50,
-                fontWeight: "bold",
-                userSelect: "none",
-            }} >
-            +
-        </div>
-
-
+            <div className="tab add-tab" onClick={handleAddDomain}>
+              +
+            </div>
           </div>
         </SortableContext>
       </DndContext>

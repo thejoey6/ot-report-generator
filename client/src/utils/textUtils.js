@@ -19,7 +19,7 @@ const groupAndFormatSentences = (domainEntries) => {
   };
 
   // Adds simple narrative text and returns object with domain and full sentences.
-  return domainEntries.map(({ domain, sentences }) => {
+  return domainEntries.map(({ domain, description, sentences }) => {
     const positives = sentences.filter(s => s.did).map(s => s.text);
     const negatives = sentences.filter(s => !s.did).map(s => s.text);
 
@@ -30,8 +30,10 @@ const groupAndFormatSentences = (domainEntries) => {
       ? `Child is unable to ${joinClauses(negatives, "or")}.`
       : "";
 
+
     return {
       domain,
+      description: description || "",
       text: [pos, neg].filter(Boolean).join(" "),
     };
   });

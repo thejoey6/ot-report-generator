@@ -1,16 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from '../AuthContext';
 
 const useTemplates = () => {
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { accessToken, fetchAccessToken } = useContext(AuthContext);
+  const token = accessToken;
 
   const fetchTemplates = async () => {
     setLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:4000/api/templates", {
+
+      const res = await fetch("/api/templates", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Failed to fetch templates");
@@ -28,7 +31,7 @@ const useTemplates = () => {
     fetchTemplates();
   }, []);
 
-  return templates;
+  return {templates, fetchTemplates};
 };
 
 export default useTemplates;

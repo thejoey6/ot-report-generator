@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../AuthContext';
 
-function TemplateList({ templates, onRefresh }) {
+function TemplateList({ templates, onRefresh, token }) {
   const [editingId, setEditingId] = useState(null);
   const [editName, setEditName] = useState('');
   const [editDescription, setEditDescription] = useState('');
@@ -18,7 +19,6 @@ function TemplateList({ templates, onRefresh }) {
   };
 
 const saveEdit = async (id) => {
-  const token = localStorage.getItem('token');
   try {
     let name = editName.trim();
     if (name === '' || name === '.docx') {
@@ -28,7 +28,7 @@ const saveEdit = async (id) => {
       name += '.docx';
     }
 
-    const res = await fetch(`http://localhost:4000/api/templates/${id}`, {
+    const res = await fetch(`/api/templates/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -49,11 +49,10 @@ const saveEdit = async (id) => {
 };
 
   const deleteTemplate = async (id) => {
-    const token = localStorage.getItem('token');
     if (!window.confirm('Are you sure you want to delete this template?')) return;
 
     try {
-      const res = await fetch(`http://localhost:4000/api/templates/${id}`, {
+      const res = await fetch(`/api/templates/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,

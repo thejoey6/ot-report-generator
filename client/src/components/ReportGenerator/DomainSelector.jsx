@@ -17,9 +17,9 @@ const DomainSelector = ({
 
      // List all behaviors (with number), filter out behaviors that are used by other selection
     const getSentenceOptions = (alreadySelected = []) => {
-        if (!currentDomain || !sentenceOptions[currentDomain]) return [];
+        if (!currentDomain || !sentenceOptions[currentDomain]?.sentences) return [];
 
-        const domainSentences = sentenceOptions[currentDomain];
+        const domainSentences = sentenceOptions[currentDomain].sentences;
 
         return Object.entries(domainSentences).map(([num, text]) => ({
             label: `${num}. ${text}`,
@@ -43,23 +43,26 @@ const DomainSelector = ({
             (entry) => entry.domain === currentDomain
         );
 
+        const description = sentenceOptions[currentDomain]?.description || "";
+
             if (existingIndex !== -1) {
                 // Update existing domain
                 const updatedEntries = [...domainEntries];
                 updatedEntries[existingIndex] = {
                     domain: currentDomain,
                     sentences: combinedSentences,
+                    description,
                 };
                 setDomainEntries(updatedEntries);
             } else {
                 // Add new domain automatically
                 setDomainEntries([
                 ...domainEntries,
-            { domain: currentDomain, sentences: [] },
+            { domain: currentDomain, sentences: [], description },
             ]);
             
         }
-    }, [successfulBehaviors, unsuccessfulBehaviors, currentDomain]);
+    }, [successfulBehaviors, unsuccessfulBehaviors, currentDomain, sentenceOptions]);
 
 
   return (
@@ -70,18 +73,36 @@ const DomainSelector = ({
         onChange={(e) => {
             const newDomain = e.target.value;
 
-            // Rename if "new tab"
-            setDomainEntries((prev) =>
-            prev.map((entry) =>
-                entry.domain === "New Tab" ? { ...entry, domain: newDomain } : entry
-            )
-            );
+            const currentEntry = domainEntries.find(entry => entry.domain === currentDomain);
+            const isCurrentDomainEmpty = currentEntry && currentEntry.sentences.length === 0;
+            const description = sentenceOptions[newDomain]?.description || "";
+
+
+            if (isCurrentDomainEmpty) {
+                // Replace current domain name if it's empty
+                setDomainEntries((prev) =>
+                    prev.map((entry) =>
+                    entry.domain === currentDomain
+                    ? { ...entry, domain: newDomain, description } // rename instead of adding
+                    : entry
+                    )
+                );
+            } else {
+                // Add a new domain if current one already has behaviors
+                if (!domainEntries.some((entry) => entry.domain === newDomain)) {
+                    setDomainEntries([
+                    ...domainEntries,
+                    { domain: newDomain, sentences: [], description },
+                    ]);
+                }
+            }
 
             setCurrentDomain(newDomain);
             setSuccessfulBehaviors([]);
             setUnsuccessfulBehaviors([]);
             setError("");
         }}
+
         style={{ width: "100%", marginBottom: "1rem" }}
     >
         <option value="">-- Choose a domain --</option>
@@ -104,7 +125,7 @@ const DomainSelector = ({
         </label>
         <Select
          isMulti
-         isDisabled={!currentDomain}
+         isDisabled={!currentDomain || currentDomain === "New Tab"}
          closeMenuOnSelect={successfulBehaviors.length >= 2} 
          options={getSentenceOptions(unsuccessfulBehaviors)}
          value={successfulBehaviors}
@@ -119,7 +140,7 @@ const DomainSelector = ({
         </label>
         <Select
          isMulti
-         isDisabled={!currentDomain}
+         isDisabled={!currentDomain || currentDomain === "New Tab"}
          closeMenuOnSelect={unsuccessfulBehaviors.length >= 2} 
          options={getSentenceOptions(successfulBehaviors)}
          value={unsuccessfulBehaviors}

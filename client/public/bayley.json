@@ -1,47 +1,68 @@
 {
   "Cognitive": {
-    "1": "calm within 30 seconds when picked up",
-     "2": "look continuously at an object for 7 to 10 seconds",
-     "3": "habituate to a rattle within the first 3 trials",
-     "4": "discriminate between objects",
-     "5": "recognize caregiver",
-     "6": "display a clearly anticipatory reaction to caregiver",
-  "7": "display a reaction to the departure of caregiver",
-  "8": "shift attention between objects",
-  "9": "show visual preference for a striped pattern",
-  "10": "habituate to balloons within 30 seconds",
-  "11": "show preference for ball over balloons",
-  "12": "respond to surroundings with visual exploration",
-  "13": "explore objects by touching, shaking, or manipulating them",
-  "14": "bring objects to mouth",
-  "15": "inspect own hands",
-  "16": "interact with mirror image",
-    "17": "persistently reach for and obtain objects",
-    "18": "play with paper by scratching, crinkling, or mouthing it",
-    "19": "bang objects intentionally and frequently"
+    "description": "Description Placeholder Cog",
+    "sentences": {
+        "1": "calm within 30 seconds when picked up",
+        "2": "look continuously at an object for 7 to 10 seconds",
+        "3": "habituate to a rattle within the first 3 trials",
+        "4": "discriminate between objects",
+        "5": "recognize caregiver",
+        "6": "display a clearly anticipatory reaction to caregiver",
+        "7": "display a reaction to the departure of caregiver",
+        "8": "shift attention between objects",
+        "9": "show visual preference for a striped pattern",
+        "10": "habituate to balloons within 30 seconds",
+        "11": "show preference for ball over balloons",
+        "12": "respond to surroundings with visual exploration",
+        "13": "explore objects by touching, shaking, or manipulating them",
+        "14": "bring objects to mouth",
+        "15": "inspect own hands",
+        "16": "interact with mirror image",
+        "17": "persistently reach for and obtain objects",
+        "18": "play with paper by scratching, crinkling, or mouthing it",
+        "19": "bang objects intentionally and frequently"
+    }
   },
   "Receptive Communication": {
-    "1": "consistently look at a person and sustain look for at least 3 seconds",
-    "2": "calm when spoken to",
-    "3": "react to sounds in environment",
-    "4": "recognize caregiver",
-    "5": "respond to a person's voice",
-    "6": "display a reaction that is clearly anticipatory",
-    "7": "shift attention"
+    "description": "Description Placeholder Recep",
+    "sentences": {
+        "1": "consistently look at a person and sustain look for at least 3 seconds",
+        "2": "calm when spoken to",
+        "3": "react to sounds in environment",
+        "4": "recognize caregiver",
+        "5": "respond to a person's voice",
+        "6": "display a reaction that is clearly anticipatory",
+        "7": "shift attention"
+    }
   },
   "Expressive Communication": {
-    "1": "placeholder"
+    "description": "Description Placeholder Exp",
+    "sentences": {
+        "1:": "Placeholder"
+    }
   },
- "Fine Motor": {
-    "1": "placeholder"
+ "Fine Motor":  {
+    "description": "Description Placeholder FM",
+    "sentences": {
+        "1:": "Placeholder"
+    }
   },
- "Gross Motor": {
-    "1": "placeholder"
+ "Gross Motor":  {
+    "description": "Description Placeholder GM",
+    "sentences": {
+        "1:": "Placeholder"
+    }
   },
- "Adaptive Behavior": {
-    "1": "placeholder"
+ "Adaptive Behavior":  {
+    "description": "Description Placeholder AB",
+    "sentences": {
+        "1:": "Placeholder"
+    }
   },
- "Social Emotional": {
-    "1": "placeholder"
+ "Social Emotional":  {
+    "description": "Description Placeholder SE",
+    "sentences": {
+        "1:": "Placeholder"
+    }
   }
 }

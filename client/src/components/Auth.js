@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 
-
 export default function AuthForm() {
   const [isRegister, setIsRegister] = useState(true);
   const [email, setEmail] = useState('');
@@ -15,16 +14,15 @@ export default function AuthForm() {
     e.preventDefault();
     setMessage('');
 
-       const endpoint = isRegister
-        ? 'http://localhost:4000/api/users/register'
-        : 'http://localhost:4000/api/users/login';
+    const endpoint = isRegister
+      ? '/api/users/register'
+      : '/api/users/login';
 
     try {
       const res = await fetch(endpoint, {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
+        credentials: "include", 
         body: JSON.stringify({ email, password }),
       });
 
@@ -41,11 +39,10 @@ export default function AuthForm() {
         setPassword('');
         setIsRegister(false);
       } else {
-        // Login success: store JWT token
-        login(data.token);
+        await login(email, password);
         setMessage('Login successful!');
-        navigate('/dashboard');
       }
+
     } catch (err) {
       setMessage('Network error: ' + err.message);
     }

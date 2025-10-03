@@ -10,13 +10,13 @@ import NewReport from '../components/ReportGenerator/NewReport';
 function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-  const templates = useTemplates(); // hook
+  const {templates, fetchTemplates} = useTemplates(); // hook
 
   return (
       <div>
         <h1>Welcome to the Dashboard of Report Generator </h1>
         <Header />
-        <TemplateManager />
+        <TemplateManager templates={templates} fetchTemplates={fetchTemplates} />
         
         <button onClick={() => setIsModalOpen(true)}>New Report</button>
 
