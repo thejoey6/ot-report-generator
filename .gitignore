@@ -7,6 +7,11 @@ server/node_modules/
 dist/
 build/
 
+#Admin Test Files
+uploads/
+templates/
+.docx
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
