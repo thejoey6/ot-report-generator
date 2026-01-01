@@ -69,18 +69,4 @@ Clone and set up the project locally:
 
 ---
 
-## Author
-
-Joseph Read
-
----
-
-## Acknowledgments
-
-- Docxtemplater for templating engine
-- Prisma for safe DB handling
-- The occupational therapist for whom this is designed
-
----
-
 *This project is still under active development. Feel free to explore or get in touch.*
