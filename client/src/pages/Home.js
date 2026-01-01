@@ -18,7 +18,6 @@ function Home() {
 
   return (
       <div>
-        <h1>Welcome to Report Generator Home! Stay a while YIPEE</h1>
         <AuthForm />
       </div>
   );

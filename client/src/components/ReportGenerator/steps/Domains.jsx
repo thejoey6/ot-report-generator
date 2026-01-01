@@ -4,7 +4,6 @@ import DomainSelector from "../DomainSelector";
 import useFetchJson from "../../../hooks/useFetchJson";
 
 export default function Domains({ data, updateData }) {
-  // Local state mirrors the old ReportGenerator domain logic
   const [currentDomain, setCurrentDomain] = useState("");
   const [domainEntries, setDomainEntries] = useState(data.domainEntries || []);
   const [successfulBehaviors, setSuccessfulBehaviors] = useState([]);
@@ -14,7 +13,6 @@ export default function Domains({ data, updateData }) {
   // Fetch domain JSON internally
   const { data: sentenceOptions, loading, error: sentencesError } = useFetchJson("/bayley.json");
 
-  // Update local domainEntries whenever behaviors change
   useEffect(() => {
     if (!currentDomain || !sentenceOptions[currentDomain]?.sentences) return;
 
@@ -52,7 +50,6 @@ export default function Domains({ data, updateData }) {
     };
   }, [domainEntries]);
 
-  // Handle loading and errors
   if (loading) return <p>Loading domain data...</p>;
   if (sentencesError) return <p style={{ color: "red" }}>Error loading domains: {sentencesError}</p>;
 
@@ -67,7 +64,7 @@ export default function Domains({ data, updateData }) {
         setCurrentDomain={setCurrentDomain}
         setSuccessfulBehaviors={setSuccessfulBehaviors}
         setUnsuccessfulBehaviors={setUnsuccessfulBehaviors}
-        setDomainEntries={setDomainEntries} // still needed for local updates
+        setDomainEntries={setDomainEntries}
       />
 
       <DomainSelector

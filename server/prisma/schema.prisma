@@ -8,13 +8,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
-  templates Template[]
-  reports   Report[]
+  
+  // Relations
+  templates           Template[]
+  reports             Report[]
+  userSuggestions     UserSuggestion[]
+  ageBasedSuggestions AgeBasedSuggestion[]
+  quickTextTemplates  QuickTextTemplate[]
+  contextualPatterns  ContextualPattern[]  // NEW
 }
 
 model Report {
@@ -22,7 +29,10 @@ model Report {
   title     String
   userId    Int
   createdAt DateTime  @default(now())
-  user      User      @relation(fields: [userId], references: [id])
+  updatedAt DateTime  @updatedAt
+  
+  // Relations
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   sections  Section[]
 }
 
@@ -32,16 +42,108 @@ model Section {
   heading   String
   content   String
   isVisible Boolean @default(true)
-  report    Report  @relation(fields: [reportId], references: [id])
+  
+  // Relations
+  report    Report  @relation(fields: [reportId], references: [id], onDelete: Cascade)
 }
 
 model Template {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String?
   fileUrl     String
   userId      Int
-  user        User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ==========================================
+// SMART SUGGESTIONS MODELS
+// ==========================================
+
+// Store user's frequently used phrases and values (UPDATED)
+model UserSuggestion {
+  id              Int      @id @default(autoincrement())
+  userId          Int
+  category        String   // e.g., 'clientInformation', 'birthHistory', 'backgroundInformation'
+  fieldName       String   // e.g., 'elarc', 'diagnosis', 'deliveryType'
+  suggestionText  String
+  usageCount      Int      @default(1)
+  isPinned        Boolean  @default(false)  // NEW: Pin favorites to top
+  isDeleted       Boolean  @default(false)
+  lastUsed        DateTime @default(now())
+  createdAt       DateTime @default(now())
+  
+  // Relations
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, category, fieldName, suggestionText])
+  @@index([userId, category, fieldName])
+  @@index([userId, usageCount])
+  @@index([userId, isPinned])  // NEW
+}
+
+// Store typical behaviors/observations by age range
+model AgeBasedSuggestion {
+  id              Int      @id @default(autoincrement())
+  userId          Int?     // NULL for system-wide defaults
+  minAgeMonths    Int
+  maxAgeMonths    Int
+  category        String   // e.g., 'motorSkills', 'communication', 'playSkills'
+  fieldName       String   // NEW: Specific field name
+  suggestionText  String
+  isSystemDefault Boolean  @default(false)
+  usageCount      Int      @default(0)
+  createdAt       DateTime @default(now())
+  
+  // Relations
+  user            User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([minAgeMonths, maxAgeMonths, category])
+  @@index([userId, category])
+  @@index([category, fieldName])  // NEW
+}
+
+// User-created quick text snippets with shortcuts
+model QuickTextTemplate {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  title        String
+  shortcut     String?  // e.g., '/uncomplicated', '/delayed'
+  templateText String
+  category     String?  // e.g., 'pregnancy', 'feeding', 'recommendations'
+  usageCount   Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  // Relations
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId, category])
+  @@index([userId, shortcut])
+}
+
+// NEW: Contextual pattern learning
+// Tracks what values commonly appear together
+model ContextualPattern {
+  id              Int      @id @default(autoincrement())
+  userId          Int
+  category        String
+  targetField     String   // The field we're suggesting for
+  contextField    String   // The related field
+  contextValue    String   // Value of the related field
+  suggestionText  String   // What to suggest when context matches
+  frequency       Int      @default(1)  // How often this pattern occurs
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relations
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, category, targetField, contextField, contextValue, suggestionText])
+  @@index([userId, category, targetField])
+  @@index([userId, frequency])
 }

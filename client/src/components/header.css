@@ -1,0 +1,122 @@
+.app-header {
+  background: #FFFFFF;
+  border-bottom: 1px solid #e5e5e5;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-icon-small {
+  width: 40px;
+  height: 40px;
+  background: #272757;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.header-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0F0E47;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.625rem;
+  align-items: center;
+}
+
+.back-to-dashboard-btn,
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #d4d4d4;
+  border-radius: 3px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 0.875rem;
+}
+
+.back-to-dashboard-btn {
+  background: #8686AC;
+  color: white;
+  border: none;
+}
+
+.back-to-dashboard-btn:hover {
+  background: #505081;
+}
+
+.logout-btn {
+  background: #FAFAFA;
+  color: #666;
+}
+
+.logout-btn:hover {
+  background: #f5f5f5;
+  color: #333;
+  border-color: #8686AC;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-content {
+    padding: 0.875rem 1.5rem;
+  }
+
+  .brand-section {
+    gap: 0.5rem;
+  }
+
+  .header-title {
+    font-size: 1.125rem;
+  }
+
+  .back-to-dashboard-btn span,
+  .logout-btn span {
+    display: none;
+  }
+
+  .back-to-dashboard-btn,
+  .logout-btn {
+    padding: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    padding: 0.75rem 1rem;
+  }
+
+  .brand-icon-small {
+    width: 36px;
+    height: 36px;
+  }
+
+  .header-title {
+    font-size: 1rem;
+  }
+}

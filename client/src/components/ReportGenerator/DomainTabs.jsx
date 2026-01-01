@@ -60,42 +60,22 @@ const style = {
             position: "absolute",
             right: 0,
             top: 0,
-            width: "40px",
+            width: "10px",
             height: "100%",
             pointerEvents: "none",
             background: `linear-gradient(to left, ${style.background}, ${style.background}77)`,
           }}
         />
       </div>
-
-      <div
-        style={{
-          display: "flex",
-          gap: "4px",
-          position: "absolute",
-          right: "6px",
-          top: "50%",
-          transform: "translateY(-50%)",
-          flexShrink: 0,
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
         <button
-          style={{
-            fontSize: "0.75rem",
-            padding: "2px 6px",
-            borderRadius: "4px",
-            border: "1px solid #e00",
-            backgroundColor: "#ffe5e5",
-            color: "#e00",
-            cursor: "pointer",
+          className="tab-delete-button"
+          onClick={(e) => {
+            e.stopPropagation();  // prevent tab click
+            onDelete();
           }}
-          onClick={onDelete}
-        >
-          Delete
+        > {tabWidth < 175 ? "X" : "Delete"}
         </button>
       </div>
-    </div>
   );
 };
 
@@ -198,7 +178,7 @@ const DomainTabs = ({
 
 
   const numTabs = domainEntries.length;
-  const tabWidth = Math.min(Math.max(800 / numTabs +40, 164), 330);
+  const tabWidth = Math.min(Math.max(1200 / (numTabs * 1.3), 142), 300);   // max() handles sizing down tabs. 142 is the smallest a tab can be. 300 is the largest
 
  return (
     <div className="domain-tabs-container">

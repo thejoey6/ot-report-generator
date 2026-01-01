@@ -6,6 +6,8 @@ import { fileURLToPath } from 'url';
 
 import userRoutes from './routes/users.js';
 import templateRoutes from './routes/templates.js';
+import suggestionsRouter from './routes/suggestions.js';
+
 import { authenticateToken } from './middleware/authenticateToken.js';
 import cookieParser from "cookie-parser";
 
@@ -35,6 +37,7 @@ app.use('/api', authenticateToken);
 
 app.use('/api/templates', templateRoutes); // protected
 
+app.use('/api/suggestions', suggestionsRouter);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
